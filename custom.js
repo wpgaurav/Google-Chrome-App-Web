@@ -8,6 +8,11 @@ function getWebView()
 
   return getWebView.view;
 }
+function removeTitlebar(titlebar_name) {
+  var titlebar = document.getElementById(titlebar_name);
+  if (titlebar)
+    document.body.removeChild(titlebar);
+}
 
 onload = function()
 {
@@ -58,6 +63,11 @@ function handleKeyDown(event)
         break;
     }
   }
+}
+function updateTitle()
+{
+  var appname = chrome.runtime.getManifest().name;
+  document.title = appname;
 }
 
 function repaintWorkaround()
