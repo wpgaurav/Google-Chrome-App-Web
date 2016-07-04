@@ -8,11 +8,6 @@ function getWebView()
 
   return getWebView.view;
 }
-function removeTitlebar(titlebar_name) {
-  var titlebar = document.getElementById(titlebar_name);
-  if (titlebar)
-    document.body.removeChild(titlebar);
-}
 
 onload = function()
 {
@@ -64,12 +59,14 @@ function handleKeyDown(event)
     }
   }
 }
-function updateTitle()
-{
-  var appname = chrome.runtime.getManifest().name;
-  document.title = appname;
-}
 
+function injectJS()
+{
+  var webview = getWebView();
+  webview.executeScript({ file: "custom.css" }, function(res) {
+    webview.contentWindow.postMessage('setup', '*');
+  });
+}
 function repaintWorkaround()
 {
   /* This is an ugly workaround that unfortunately is needed in order to
